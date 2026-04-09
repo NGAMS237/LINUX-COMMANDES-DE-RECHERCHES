@@ -147,6 +147,39 @@ grep "motif" /var/log/*.log
 - Combine `find` / `grep` avec `wc`, `sort`, `uniq`, `head`, `tail` et `less` pour analyser de gros volumes de fichiers.
 - Met à jour la base `locate` régulièrement si tu l’utilises souvent (`sudo updatedb`).
 
+
+
+
+## 5. Commande `wc` – Compter lignes, mots et caractères
+
+La commande `wc` (word count) sert à **compter le nombre de lignes, de mots et de caractères** dans un fichier ou dans une entrée de commande (souvent via un pipe `|`).  
+Elle est très utile pour **compter le nombre de fichiers trouvés** par `find` ou pour analyser rapidement un fichier de texte.
+
+### Tableau récapitulatif de `wc`
+
+| Option | Exemple | Explication |
+|--------|---------|-------------|
+| `wc` (sans option) | `wc fichier.txt` | Affiche **lignes**, **mots** et **caractères** pour le fichier. |
+| `-l` | `wc -l fichier.txt` | Compte **uniquement le nombre de lignes** (ex. nombre de fichiers listés). |
+| `-w` | `wc -w fichier.txt` | Compte **uniquement le nombre de mots**. |
+| `-c` | `wc -c fichier.txt` | Compte **le nombre de caractères** (ou d’octets). |
+| `-m` | `wc -m fichier.txt` | Compte le nombre de **caractères Unicode** (utile si UTF‑8). |
+
+### Exemples concrets
+
+| Exemple | Effet |
+|---------|-------|
+| `wc /etc/passwd` | Affiche : nombre de lignes, mots et caractères du fichier `/etc/passwd`. |
+| `wc -l /etc/passwd` | Affiche seulement le **nombre de lignes** (ex. 100 lignes). |
+| `ls -1 | wc -l` | Compte le **nombre de fichiers/dossiers** dans le répertoire courant (un par ligne). |
+| `find / -user root -perm 666 2>/dev/null | wc -l` | Compte le **nombre de fichiers** appartenant à `root` avec permissions `666`. |
+
+### À retenir
+
+- `wc` est souvent utilisée en **combinaison avec `find`, `grep`, `ls`** via `|` pour **compter des résultats**.  
+- `wc -l` est l’option la plus utile pour les **TPs** : elle donne directement le **nombre d’éléments** (chaque ligne = un élément).  
+- Si tu veux seulement une **valeur chiffrée** (sans le nom du fichier), tu peux parfois combiner avec `awk` :  
+  `find ... | wc -l | awk '{print $1}'`.
 ---
 
 > **Projet :** 420-FBD-LI – Soutien technique et formation  
