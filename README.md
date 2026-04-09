@@ -182,5 +182,53 @@ Elle est très utile pour **compter le nombre de fichiers trouvés** par `find` 
   `find ... | wc -l | awk '{print $1}'`.
 ---
 
+
+## 5. Critères de filtre et commandes de recherche
+
+Les commandes de recherche Linux se combinent souvent avec des **filtres** pour afficher, compter ou limiter les résultats.  
+Les principales commandes de filtrage sont : `tail`, `head`, `wc`, `grep`, `sort`, `uniq`.
+
+### Tableau récapitulatif des filtres courants
+
+| Commande / filtre | Exemple | Effet |
+|-------------------|---------|-------|
+| `tail`            | `tail -n 5 fichier.txt` | Affiche les **5 dernières lignes** du fichier. |
+| `tail -n +5`      | `tail -n +5 fichier.txt` | Affiche **à partir de la 5ᵉ ligne** (exclut les 4 premières). |
+| `head`            | `head -n 5 fichier.txt` | Affiche les **5 premières lignes** du fichier. |
+| `head -n -5`      | `head -n -5 fichier.txt` | Affiche toutes les lignes **sauf les 5 dernières**. |
+| `wc`              | `wc fichier.txt` | Affiche **lignes / mots / caractères** du fichier. |
+| `wc -l`           | `ls -1 \| wc -l` | **Compte le nombre de lignes** (ex. nombre de fichiers listés). |
+| `wc -w`           | `wc -w fichier.txt` | Compte le **nombre de mots**. |
+| `wc -c`           | `wc -c fichier.txt` | Compte le **nombre de caractères** (octets). |
+| `grep`            | `grep "motif" fichier.txt` | Affiche les **lignes contenant le motif**. |
+| `grep -i`         | `grep -i "erreur" /var/log/*.log` | Idem mais **insensible à la casse**. |
+| `grep -v`         | `grep -v "debug" log.txt` | Affiche les lignes **qui ne contiennent pas** le motif. |
+| `grep -c`         | `grep -c "warning" log.txt` | **Compte** le nombre de lignes contenant le motif. |
+| `grep -l`         | `grep -l "TODO" *.sh` | Affiche **seulement les noms de fichiers** correspondants. |
+| `grep -r`         | `grep -r "config" .` | Recherche **récursive** dans tous les sous‑dossiers. |
+| `sort`            | `sort fichier.txt` | Trie les lignes **par ordre alphabétique**. |
+| `sort -r`         | `find /etc -type f \| sort -r` | Trie en **ordre inverse**. |
+| `uniq`            | `sort fichier.txt \| uniq` | Supprime les **lignes dupliquées consécutives**. |
+| `uniq -c`         | `sort fichier.txt \| uniq -c` | Compte les occurrences de chaque ligne. |
+
+---
+
+### Exemples de combinaisons utiles
+
+| Exemple | Effet |
+|---------|-------|
+| `tail -n 5 /etc/passwd` | Affiche les 5 dernières lignes de `/etc/passwd` (nouveaux utilisateurs). |
+| `find / -type f -name "*.log" \| grep -i "error" \| wc -l` | Compte le nombre de lignes contenant "error" dans tous les fichiers `.log`. |
+| `ls -1 \| head -n 10` | Affiche les 10 premiers fichiers/dossiers du répertoire courant. |
+| `cat /var/log/syslog \| tail -n 20 \| grep "warning"` | Affiche les 20 dernières lignes de `syslog`, puis filtre seulement les lignes avec "warning". |
+
+---
+
+### À retenir
+
+- `tail` et `head` servent à **limiter la sortie** (début ou fin).  
+- `grep` filtre le **contenu** des lignes.  
+- `wc` permet de **compter** les lignes, mots ou caractères.  
+- Les commandes sont souvent combinées avec un **pipe** (`|`) pour créer des **filtres en chaîne**.
 > **Projet :** 420-FBD-LI – Soutien technique et formation  
 > **Étudiant :** [Ton nom] – Cégep de Limoilou
